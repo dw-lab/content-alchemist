@@ -40,13 +40,13 @@ uv pip install git+https://github.com/dw-lab/content-alchemist.git
 
 ## Usage
 
-To use Content Alchemist in your Python project, you can import and use the `ContentAlchemist` class like this:
+To use Content Alchemist in your Python project, you can import and use the `QuintessenzAkkumulator` class like this:
 
 ```python
-from alchemist import ContentAlchemist
+from akkumulator import QuintessenzAkkumulator
 
 url = "https://example.com/article"
-alchemist = ContentAlchemist(url)
+alchemist = QuintessenzAkkumulator(url)
 
 alchemist.fetch_content()
 alchemist.extract_content()

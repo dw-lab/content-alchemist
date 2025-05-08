@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 
-class ContentAlchemist:
+class QuintessenzAkkumulator:
     def __init__(self, url):
         self.url = url
         self.raw_html = None
