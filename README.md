@@ -18,10 +18,24 @@ Content Alchemist is a Python package designed to fetch, extract, and save conte
 
 ## Installation
 
+I reccomend using uv as your Python package manager. To install uv, run the following command:
+
+macOS and Linux:
+
+```
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Windows:
+
+```
+DON'T USE WINDOWS!
+```
+
 You can install Content Alchemist directly from GitHub using pip:
 
 ```
-pip install git+https://github.com/dw-lab/content-alchemist.git
+uv pip install git+https://github.com/dw-lab/content-alchemist.git
 ```
 
 ## Usage
