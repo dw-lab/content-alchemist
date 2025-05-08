@@ -43,7 +43,7 @@ uv pip install git+https://github.com/dw-lab/content-alchemist.git
 To use Content Alchemist in your Python project, you can import and use the `ContentAlchemist` class like this:
 
 ```python
-from content_alchemist import ContentAlchemist
+from alchemist import ContentAlchemist
 
 url = "https://example.com/article"
 alchemist = ContentAlchemist(url)
