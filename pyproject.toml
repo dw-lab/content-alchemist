@@ -23,8 +23,8 @@ dependencies = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/Jakolo121/content-alchemist"
-"Bug Tracker" = "https://github.com/Jakolo121/content-alchemist/issues"
+"Homepage" = "https://github.com/dw-lab/content-alchemist"
+"Bug Tracker" = "https://github.com/dw-lab/content-alchemist/issues"
 
 [tool.setuptools]
 package-dir = {"" = "alchemist"}

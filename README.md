@@ -21,7 +21,7 @@ Content Alchemist is a Python package designed to fetch, extract, and save conte
 You can install Content Alchemist directly from GitHub using pip:
 
 ```
-pip install git+https://github.com/yourusername/content-alchemist.git
+pip install git+https://github.com/dw-lab/content-alchemist.git
 ```
 
 ## Usage
