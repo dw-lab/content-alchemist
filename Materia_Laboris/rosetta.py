@@ -1,11 +1,36 @@
 import requests
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
+from dotenv import load_dotenv
+import getpass
+import os
 
+# Get the current script's directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Go up one level to the parent directory
+parent_dir = os.path.dirname(current_dir)
+# Set the path to the Quintessenz folder
+quintessenz_dir = os.path.join(parent_dir, "Quintessenz")
+
+load_dotenv()
+
+if not os.environ.get("OPENAI_API_KEY"):
+    os.environ["OPENAI_API_KEY"] = getpass.getpass(
+        "Enter your DW-LLM API key: ")
+
+
+def load_markdown_files(directory):
+    markdown_contents = []
+    for filename in os.listdir(directory):
+        if filename.endswith('.md'):
+            with open(os.path.join(directory, filename), 'r', encoding='utf-8') as file:
+                content = file.read()
+                markdown_contents.append((filename, content))
+    return markdown_contents
 
 
 system_prompt = ChatPromptTemplate.from_messages([
-    ("system","""## Rolle und Aufgabe
+    ("system", """## Rolle und Aufgabe
 Du bist ein spezialisierter Übersetzer-Agent für die südslawischen Sprachen Bosnisch, Serbisch und Kroatisch. Deine Hauptaufgabe ist es, Nachrichtentexte im Markdown-Format zwischen diesen Sprachen präzise und kontextsensitiv zu übersetzen.
 
 ## Sprachliche Kompetenzen
@@ -34,13 +59,43 @@ Du bist ein spezialisierter Übersetzer-Agent für die südslawischen Sprachen B
 3. Übersetze den Inhalt unter Berücksichtigung aller oben genannten Richtlinien
 4. Überprüfe die Übersetzung auf Genauigkeit, Stil und Formatierung
 5. Gib den übersetzten Text im ursprünglichen Markdown-Format zurück"""),
-    ("human","{input}"),
+    ("human", "{input}"),
 ])
 
 
-llm = ChatOpenAI(model="anthropic.claude-3-5-sonnet-20240620-v1:0", temperature=0, api_key=token, base_url="https://llm-hub.dw.com/openai/")
+llm = ChatOpenAI(model="anthropic.claude-3-5-sonnet-20240620-v1:0",
+                 temperature=0,  base_url="https://llm-hub.dw.com/openai/")
 
 chain = system_prompt | llm
 
+# Load Markdown files from the Quintessenz directory
 
-print(llm.invoke(messages))
+markdown_files = load_markdown_files(quintessenz_dir)
+
+# Process each Markdown file
+for filename, content in markdown_files:
+    print(f"Processing file: {filename}")
+
+    # Prepare the input for the chain
+    input_text = f"""
+Übersetze den folgenden Markdown-Text von Deutsch ins Englische:
+
+{content}
+
+Bewahre die Markdown-Formatierung und alle Eigennamen bei.
+"""
+
+# Invoke the chain
+    ai_msg = chain.invoke({"input": input_text})
+
+    # Print or save the translated content
+    print(f"Translation for {filename}:")
+    print(ai_msg.content)
+    print("\n" + "="*50 + "\n")
+
+    # Optionally, save the translated content to a new file
+    translated_filename = f"translated_{filename}"
+    with open(os.path.join(quintessenz_dir, translated_filename), 'w', encoding='utf-8') as file:
+        file.write(ai_msg.content)
+
+print("All files processed and translated.")

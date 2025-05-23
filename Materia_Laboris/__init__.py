@@ -1,1 +1,1 @@
-from .alchemist import ContentAlchemist
+from .akkumulator import QuintessenzAkkumulator
